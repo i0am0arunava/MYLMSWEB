@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "heading": "physics",
+        "createdAt": "2023-10-19T08:54:22.106Z",
+        "updatedAt": "2023-10-19T08:54:22.106Z"
+    },
+    {
+        "id": 3,
+        "heading": "chemistry",
+        "createdAt": "2023-10-19T09:01:29.285Z",
+        "updatedAt": "2023-10-19T09:01:29.285Z"
+    }
+]
+<% for (let ensd of ensds) { %>
+                       
+                           
+<% if (ensd.courseId == pack.id) { %>
+    
+
+
+<% } %>
+
+<% } %>
