@@ -255,15 +255,21 @@ app.post(
 app.get("/chapter", connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
     const notees = await Note.findAll({ where: { userId: req.user.id } })
     const notee = notees[notees.length - 1]
-    if (req.accepts("html")) {
-        res.render('chapter', {
-     notee
-        });
+    if(notee){
+        if (req.accepts("html")) {
+            res.render('chapter', {
+         notee
+            });
+        }
+        else {
+            res.json({
+            })
+        }
+    }else{
+        req.flash("error", "first create a course")
+        res.redirect("/show")
     }
-    else {
-        res.json({
-        })
-    }
+  
 })
 app.post("/chapter", async (req, res) => {
     const notees = await Note.findAll({ where: { userId: req.user.id } })
@@ -274,8 +280,10 @@ app.post("/chapter", async (req, res) => {
 app.get("/page", connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
     const notees = await Note.findAll({ where: { userId: req.user.id } })
     const notee = notees[notees.length - 1]
-    const chapters = await Chapter.findAll({ where: { NoteId: notee.id } })
+   
 
+   if(notee){
+    const chapters = await Chapter.findAll({ where: { NoteId: notee.id } })
     if (req.accepts("html")) {
         res.render('page', {
             notee,
@@ -286,6 +294,10 @@ app.get("/page", connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
         res.json({
         })
     }
+   }else{
+    req.flash("error", "first create a chapter")
+    res.redirect("/show")
+   }
 })
 app.post("/page", connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
     const ao = await Page.create({ word: req.body.word, chapterId: req.body.chapterId ,completed:false});
